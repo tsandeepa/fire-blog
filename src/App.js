@@ -5,16 +5,17 @@ import CraetePost from './Pages/CreatePost';
 import Login from './Pages/Login';
 import { useState } from 'react';
 import { signOut } from 'firebase/auth';
+import { auth } from "./firebase-config";
 
 function App() {
 
   const [isAuth, setIsAuth] = useState(false)
 
-  // const signUserOut = () =>{
-  //   signOut(auth).then(()=>{
-  //     localStorage.clear()
-  //   })
-  // }
+  const signUserOut = () =>{
+    signOut(auth).then(()=>{
+      localStorage.clear()
+    })
+  }
 
   return (
     <Router>
@@ -22,7 +23,7 @@ function App() {
       <nav style={{display:'flex', gap:'20px', justifyContent:'center'}}>
         <Link to="/">Home</Link>
         <Link to="/create">About</Link>
-        {!isAuth? <Link to="/login">Login</Link>: <button>Logout</button>}
+        {!isAuth? <Link to="/login">Login</Link>: <button onClick={signUserOut}>Logout</button>}
       </nav>
       <Routes>
         <Route path='/' element={<Home/>} />
