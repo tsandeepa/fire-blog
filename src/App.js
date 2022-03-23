@@ -6,6 +6,7 @@ import Login from './Pages/Login';
 import { useEffect, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from "./firebase-config";
+import MyBlogs from './Pages/MyBlogs';
 
 function App() {
 
@@ -27,18 +28,21 @@ function App() {
       
       <nav style={{display:'flex', gap:'20px', justifyContent:'center', background:'#ccc', padding:'30px'}}>
         <Link to="/">Home</Link>
-        {!isAuth? <Link to="/login">Login</Link>: 
-        <>
-          <Link to="/create"   >Create</Link>
-          <button onClick={signUserOut}>Logout</button>
-          <p>{userName}</p>
-        </>
+        {!isAuth? 
+          <Link to="/login">Login</Link>: 
+          <>
+            <Link to="/create">Create</Link>
+            <Link to="/myblogs">My Blogs</Link>
+            <button onClick={signUserOut}>Logout</button>
+            <p>{userName}</p>
+          </>
         }
       </nav>
       <Routes>
         <Route path='/' element={<Home isAuth={isAuth} setUserName={setUserName}/>} />
         <Route path='/create' element={<CraetePost isAuth={isAuth}/>} />
         <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
+        <Route path='/myblogs' element={<MyBlogs isAuth={isAuth} />} />
       </Routes>
     </Router>
   );

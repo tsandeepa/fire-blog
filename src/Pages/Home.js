@@ -2,30 +2,32 @@ import { useEffect, useState } from "react";
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { async } from "@firebase/util";
+import useFetch from "../Components/useFetch";
 
 
 const Home = ({isAuth, setUserName}) => {
 
-    const [postList, setPostList] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const postsCollectionRef = collection(db, "posts")
-    const [reload, setReload] = useState(false)
+    // const [postList, setPostList] = useState([])
+    // const [isLoading, setIsLoading] = useState(false)
+    // const postsCollectionRef = collection(db, "posts")
+    // const [reload, setReload] = useState(false)
 
-    
+    const {reload, isLoading, setReload, postList} = useFetch(setUserName)
     setUserName(localStorage.getItem('userName'))
 
-    useEffect(()=>{
-        setIsLoading(true)
-        const getPosts = async () => {
-            const data = await getDocs(postsCollectionRef);
-            console.log(data.docs.map((doc)=> ({...doc.data()})));
-            setPostList(data.docs.map((doc)=> ({...doc.data(), id: doc.id})))
-            setIsLoading(false)
-        };
+    // useEffect(()=>{
+    //     setIsLoading(true)
+    //     const getPosts = async () => {
+    //         const data = await getDocs(postsCollectionRef);
+    //         console.log(data);
+    //         console.log(data.docs.map((doc)=> ({...doc.data(), id: doc.id})));
+    //         setPostList(data.docs.map((doc)=> ({...doc.data(), id: doc.id})))
+    //         setIsLoading(false)
+    //     };
 
-        getPosts()
+    //     getPosts()
 
-    },[reload])
+    // },[reload])
 
     const deletePost = async (id) =>{
         console.log(id);
@@ -48,7 +50,8 @@ const Home = ({isAuth, setUserName}) => {
                         return(
                             <div key={i}>
                                 <h3>{post.title}</h3>
-                                <label>{post.author.name}</label>
+                                <img style={{width:'100px'}} src={post.coverImg} alt="" /> <br></br>
+
                                 <label>{post.author.name}</label>
 
                                 {
