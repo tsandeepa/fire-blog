@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp  } from "firebase/firestore";
 import { db, auth, storage } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const CraetePost = ({isAuth}) => {
 
-    
+    let timestampOrder = new Date().getTime();
+    let timestamp = new Date().toDateString().slice(4);
 
     const [title, setTitle] = useState('')
     const [postText, setPostText] = useState('')
+    const [category, setCategory] = useState('All')
     const [file, setFile] = useState(null)
     const [progress, setProgress] = useState(0)
     const [coverImg, setCoverImg] = useState(null)
@@ -19,7 +21,7 @@ const CraetePost = ({isAuth}) => {
     const postsCollectionRef = collection(db, "posts")
 
     const createPost = async () =>{
-        await addDoc(postsCollectionRef,{title, postText, coverImg, author: {name: auth.currentUser.displayName, id: auth.currentUser.uid }});
+        await addDoc(postsCollectionRef,{timestamp, timestampOrder, title, postText, coverImg, category,author: {name: auth.currentUser.displayName, id: auth.currentUser.uid }});
         navigate('/')
     }
 
@@ -84,6 +86,24 @@ const CraetePost = ({isAuth}) => {
                     <label>Post :{postText} </label><br/>
                     <textarea placeholder="Post" onChange={(e)=>{setPostText(e.target.value)}}></textarea>
                 </div>
+
+                
+                <div className="form-group">
+                    <label>Category :{category} </label><br/>
+                    <select
+                        value={category}
+                        onChange={(e)=>setCategory(e.target.value)}
+                    >
+                            {/* <option>Uncategorized</option> */}
+                            <option>Tech</option>
+                            <option>Lifestyle</option>
+                            <option>Sports</option>
+                            <option>Entertainment</option>
+                            <option>Other</option>
+                    </select>
+                </div>
+
+
                 
                 <br/>
                 <button onClick={createPost}>Submit Post</button>
