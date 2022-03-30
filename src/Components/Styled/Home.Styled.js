@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const HomeMain = styled.div`
-    background: #d5d5d5;
+    background:${({theme})=> theme.bg};
     max-width: 1100px;
     margin: 0 auto;
     padding: 20px;

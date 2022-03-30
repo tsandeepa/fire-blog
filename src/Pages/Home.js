@@ -108,20 +108,17 @@ const Home = ({isAuth, setUserName}) => {
                                 <Link to={`/blog/${post.id}`}>
                                     
 
-                                    <h3>{post.title}</h3>
-                                    <img style={{width:'100px'}} src={post.coverImg} alt="" /> <br></br>
-
-                                    <p>{post.author?.name}</p>
-                                    <label>{post.category}</label>
-
-                                    {
+                                    <h3 className="blog-cover-title">{post.title}</h3>
+                                    <img className="blog-cover-img" src={post.coverImg} alt="" /> 
+                                    <p className="blog-author">{post.author?.name}</p>
+                                    <label className="blog-category">{post.category}</label>
+                                    <p className="blog-text-prv">{post.postText}</p>
+                                    {/* {
                                         isAuth && post.author?.id == auth.currentUser?.uid && (
                                             <button onClick={()=>{deletePost(post.id)}}>Delete</button>
                                         )
-                                    }
-                                    <br/>
-                                    <br/>
-                                    <p>{post.timestamp}</p>
+                                    } */}
+                                    <p className="blog-timestamp">{post.timestamp}</p>
 
                                 </Link>    
                             </Blog>

@@ -34,17 +34,16 @@ const Blog = ({isAuth}) => {
                                     {
                                          post.id == id && (
 
-                                           <>
+                                           <div className="blog-box">
                                              <h3>{post.title}</h3>
-                                            <img style={{width:'100px'}} src={post.coverImg} alt="" /> <br></br>
+                                                <img style={{width:'100px'}} src={post.coverImg} alt="" /> <br></br>
     
-                                            <p>{post.author.name}</p>
-                                            <label>{post.category}</label>
+                                                <p>{post.author.name}</p>
+                                                <label>{post.category}</label>
     
                                                 {/* <button onClick={()=>{deletePost(post.id)}}>Delete</button> */}
-                                                <br/>
-                                                <br/>
-                                           </>
+                                                
+                                           </div>
     
                                         )
                                     }

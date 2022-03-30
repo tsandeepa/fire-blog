@@ -9,6 +9,9 @@ import { auth } from "./firebase-config";
 import MyBlogs from './Pages/MyBlogs';
 import Blog from './Pages/Blog';
 import Header from './Components/Header';
+import GlobalStyles from './Components/Styled/Global.styled' 
+import {ThemeProvider} from 'styled-components'
+import {lightTheme, darkTheme} from './Components/Styled/Theme.styled'
 
 function App() {
 
@@ -23,13 +26,19 @@ function App() {
       window.location.pathname= './login'
     })
   }
-  
+
+  const[theme, setTheme] = useState(lightTheme);
+
+  const handleTheme = () =>{
+    theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
+  }
 
   return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles/>
     <Router>
       
-      
-      <Header isAuth={isAuth} signUserOut={signUserOut} userName={userName}/>
+      <Header isAuth={isAuth} signUserOut={signUserOut} userName={userName} handleTheme={handleTheme}/>
       <Routes>
         <Route path='/' element={<Home isAuth={isAuth} setUserName={setUserName}/>} />
         <Route path='/create' element={<CraetePost isAuth={isAuth}/>} />
@@ -38,6 +47,7 @@ function App() {
         <Route path='/blog/:id' element={<Blog isAuth={isAuth} />} />
       </Routes>
     </Router>
+    </ThemeProvider>
   );
 }
 

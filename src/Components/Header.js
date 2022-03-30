@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import {Navbar} from "./Styled/Header.styled"
 
-const Header = ({isAuth, signUserOut, userName}) => {
+const Header = ({isAuth, signUserOut, userName, handleTheme}) => {
 
     
 
 
     return ( 
-        <Navbar>
+      <Navbar>
         <Link to="/">Home</Link>
         {!isAuth? 
           <Link to="/login">Login</Link>: 
@@ -18,6 +18,7 @@ const Header = ({isAuth, signUserOut, userName}) => {
             <p>{userName}</p>
           </>
         }
+        <button onClick={()=>handleTheme()}>Theme </button>
       </Navbar>
      );
 }
