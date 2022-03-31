@@ -107,7 +107,11 @@ const MyBlogs = ({isAuth}) => {
                 eidState &&
                 <EditPost  eidState={eidState} 
                             setEditState={setEditState} 
-                            postId={postId} />
+                            postId={postId} 
+                            postList={postList}
+                            setReload={setReload}
+                            reload={reload}
+                            />
                 }
 
                

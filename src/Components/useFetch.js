@@ -26,6 +26,8 @@ const useFetch = () => {
 
     useEffect(()=>{
         setIsLoading(true)
+        // setFilteredCategoryPosts([])
+        
         const getPosts = async () => {
             const data = await getDocs(postsCollectionRef);
             const dataCategory = await getDocs(categoryCollectionRef);

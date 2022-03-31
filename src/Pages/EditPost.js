@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { auth, db, storage } from "../firebase-config";
 import { getDocs, collection, deleteDoc, updateDoc ,doc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { async } from "@firebase/util";
 
 
-const EditPost = ({eidState, setEditState, postId }) => {
+const EditPost = ({eidState, setEditState, postId, postList, reload, setReload }) => {
 
     
 
@@ -17,7 +18,17 @@ const EditPost = ({eidState, setEditState, postId }) => {
     const [progress, setProgress] = useState(0)
     const [coverImg, setCoverImg] = useState(null)
     const [editLoading, setEditLoading] = useState(false)
+    
 
+    const [editTitle, seteditTitle] = useState();
+    
+
+    
+
+
+
+
+    
     const btnUploadFile = () =>{
         console.log(file);
         if(!file) return
@@ -57,19 +68,41 @@ const EditPost = ({eidState, setEditState, postId }) => {
         await updateDoc(postDoc, {
             title: `${title}`,
             coverImg: `${coverImg}`,
+            postText:`${postText}`,
+            category:`${category}`
+
         });
         setEditLoading(false)
         setEditState(false)
+        setReload(!reload)
     }
+
+
+
+    useEffect(async ()=>{
+
+        const editBlog = await postList.filter(post => post.id == postId )
+        console.log(editBlog);
+
+        setTitle(editBlog[0].title)
+        setPostText(editBlog[0].postText)
+        setCategory(editBlog[0].category)
+        setCoverImg(editBlog[0].coverImg)
+
+    },[])
+
 
 
 
     return ( 
         <div>
+
+           
             <h3>Edit post - {postId}</h3>
             <div className="eidt-post">
                 <div>
                     <div className="form-group">
+                        <img src={coverImg} style={{'width':'200px'}} alt="" />
                         <label>File</label><br/>
                         <input  type="file" onChange={handleFileInput}/>
                         <button onClick={()=>btnUploadFile()}>Upload</button> <br></br>
@@ -78,12 +111,12 @@ const EditPost = ({eidState, setEditState, postId }) => {
                     <div className="post-box">
                         <div className="form-group">
                             <label>Title : {title}</label><br/>
-                            <input type="text" placeholder="Title..." onChange={(e)=>{setTitle(e.target.value)}} />
+                            <input type="text" placeholder="Title..."  value={title} onChange={(e)=>{setTitle(e.target.value)}} />
                         </div>
                         <br/>
                         <div className="form-group">
                             <label>Post :{postText} </label><br/>
-                            <textarea placeholder="Post" onChange={(e)=>{setPostText(e.target.value)}}></textarea>
+                            <textarea placeholder="Post" value={postText}  onChange={(e)=>{setPostText(e.target.value)}}></textarea>
                         </div>
 
                         <div className="form-group">

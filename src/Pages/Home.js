@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { async } from "@firebase/util";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Blog } from "../Components/Styled/Blog.styled";
 import { Bloglist } from "../Components/Styled/Bloglist.styled";
 import { HomeMain } from "../Components/Styled/Home.Styled";
+import { motion } from "framer-motion";
 
 
 const Home = ({isAuth, setUserName}) => {
@@ -46,11 +47,22 @@ const Home = ({isAuth, setUserName}) => {
     }
     // console.log(isAuth);
 
-    const filterCategory = (category) =>{
-        console.log(category);
-        setSelectedCategory(category)
 
-        
+    const catTabs = useRef(null)
+
+    const filterCategory = (category,e) =>{
+        console.log(category,e);
+        setSelectedCategory(category)
+        console.log(catTabs.current);
+        const catLbls =  catTabs.current.querySelectorAll('label');
+        console.log(catLbls);
+        catLbls.forEach(lbl => {
+            if(lbl.innerHTML == category){
+                lbl.classList.add('active')
+            } else{
+                lbl.classList.remove('active')
+            }
+        });
         // if(category == "All"){
         //     console.log('All Clicked');
         //     setSelectedCategory('All')
@@ -74,23 +86,35 @@ const Home = ({isAuth, setUserName}) => {
     }
 
    
-    
+    const variants = {
+        hidden: { opacity: 0, scale:0.8},
+        visible: i =>(
+            { 
+                opacity: 1,
+                scale:1,
+                transition:{
+                    type: "easeIn",
+                    delay: i * 0.1,
+                } 
+            }
+        )
+      }
+
 
     return ( 
         <HomeMain>
-            <h1>This is home</h1>
+            
             
             <div>
-                <h2>Post List</h2>
                 <br/>
-                {isLoading && <div>Loading...</div>}
+                {isLoading && <div style={{"position": "absolute"}}>Loading...</div>}
 
-                <div className="category-tabs">
+                <div className="category-tabs" ref={catTabs}>
                     {
                         categoryList.map((list,i)=>{
                             return(
-                                <div key={i} onClick={(e)=>{filterCategory(e.target.innerHTML)}}>
-                                    <label htmlFor="">{list.category}</label>
+                                <div key={i}  onClick={(e)=>{filterCategory(e.target.innerHTML, e)}}>
+                                    <label>{list.category}</label>
                                 </div>
                             )
                         })
@@ -106,19 +130,32 @@ const Home = ({isAuth, setUserName}) => {
 
                             <Blog key={i}>
                                 <Link to={`/blog/${post.id}`}>
+                                    <motion.div layout
+                                        custom={i}
+                                        initial="hidden"
+                                        animate="visible"
+                                        variants={variants}
+                                    >
+                                        <h3 className="blog-cover-title">{post.title}</h3>
+                                        <img className="blog-cover-img" src={post.coverImg} alt="" /> 
+                                        <label className="blog-category">{post.category}</label>
+                                        <p className="blog-text-prv">{post.postText}</p>
+                                    </motion.div>
                                     
 
-                                    <h3 className="blog-cover-title">{post.title}</h3>
-                                    <img className="blog-cover-img" src={post.coverImg} alt="" /> 
-                                    <p className="blog-author">{post.author?.name}</p>
-                                    <label className="blog-category">{post.category}</label>
-                                    <p className="blog-text-prv">{post.postText}</p>
+                                    
                                     {/* {
                                         isAuth && post.author?.id == auth.currentUser?.uid && (
                                             <button onClick={()=>{deletePost(post.id)}}>Delete</button>
                                         )
                                     } */}
-                                    <p className="blog-timestamp">{post.timestamp}</p>
+                                    <div className="bg-foot">
+                                        <p className="blog-author">{post.author?.name}</p>
+                                        <p className="blog-timestamp">{post.timestamp}</p>
+                                    </div>
+                                    
+
+
 
                                 </Link>    
                             </Blog>

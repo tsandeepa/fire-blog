@@ -10,5 +10,15 @@ export const HomeMain = styled.div`
         gap: 20px;
         justify-content: center;
         padding: 20px;
+        div{
+            label{
+                cursor: pointer;
+                padding: 10px 30px;
+                border-radius: 50px;
+            }
+            .active{
+                background: ${({theme})=> theme.categoryActive};
+            }
+        }
     }
 `

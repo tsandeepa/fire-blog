@@ -33,7 +33,10 @@ export const Blog = styled.div`
     .blog-text-prv{
 
     }
-    .blog-timestamp{
+    
+    .bg-foot{
+        .blog-timestamp{
 
+        }
     }
 `
