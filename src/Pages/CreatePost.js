@@ -3,6 +3,9 @@ import { addDoc, collection, serverTimestamp  } from "firebase/firestore";
 import { db, auth, storage } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { CreateBlog } from "../Components/Styled/CreateBlog.styled";
+import { motion } from "framer-motion";
+
 
 const CraetePost = ({isAuth}) => {
 
@@ -15,6 +18,8 @@ const CraetePost = ({isAuth}) => {
     const [file, setFile] = useState(null)
     const [progress, setProgress] = useState(0)
     const [coverImg, setCoverImg] = useState(null)
+
+    const [upFileName, setupFileName] = useState(null);
 
     let navigate = useNavigate();
 
@@ -42,6 +47,8 @@ const CraetePost = ({isAuth}) => {
         // handle validations
         // onFileSelect(e.target.files[0])
         const upFile = e.target.files[0];
+        console.log(upFile);
+        setupFileName(upFile.name)
         setFile(upFile)
     }
 
@@ -67,48 +74,64 @@ const CraetePost = ({isAuth}) => {
         );
     }
     return ( 
-        <div className="createPost-conatiner">
-
-            <h3>This is create post page</h3>
-            <div className="form-group">
-                    <label>File</label><br/>
-                    <input  type="file" onChange={handleFileInput}/>
-                    <button onClick={()=>btnUploadFile()}>Upload</button> <br></br>
-                    <h3>Progress {progress}%</h3>
-            </div>
-            <div className="post-box">
-                <div className="form-group">
-                    <label>Title : {title}</label><br/>
-                    <input type="text" placeholder="Title..." onChange={(e)=>{setTitle(e.target.value)}} />
+        <CreateBlog>
+            <motion.div layout>
+                <div className="sub-page-header">
+                    <h3>Create Blog</h3>
+                    <label htmlFor="">Add your blog details here</label>
                 </div>
-                <br/>
-                <div className="form-group">
-                    <label>Post :{postText} </label><br/>
-                    <textarea placeholder="Post" onChange={(e)=>{setPostText(e.target.value)}}></textarea>
+                <div className="form-group ">
+                        <label>Cover Image</label>
+                        <div className="upload-input">
+                            <div>
+                                <div className="prg-bar" style={{'width': `${progress}%`}}> <span>{progress}%</span></div>
+
+                                <span>   {upFileName ? upFileName : 'Drag or selet a file to upload' }</span>
+                                <input type="file" onChange={handleFileInput}/>
+                            </div>
+                            <button onClick={()=>btnUploadFile()}>Upload image</button> 
+                        </div>
+
+                        <div className="img-prv">
+                            {coverImg ? <img src={coverImg} alt="" /> : ''}
+                        </div>
+                        
                 </div>
+                <div className="post-box">
+                    <div className="form-group">
+                        <label>Title </label>
+                        <input type="text" placeholder="Title..." onChange={(e)=>{setTitle(e.target.value)}} />
+                    </div>
+                    <br/>
+                    <div className="form-group">
+                        <label>Post  </label>
+                        <textarea placeholder="Post" onChange={(e)=>{setPostText(e.target.value)}}></textarea>
+                    </div>
 
-                
-                <div className="form-group">
-                    <label>Category :{category} </label><br/>
-                    <select
-                        value={category}
-                        onChange={(e)=>setCategory(e.target.value)}
-                    >
-                            {/* <option>Uncategorized</option> */}
-                            <option>Tech</option>
-                            <option>Lifestyle</option>
-                            <option>Sports</option>
-                            <option>Entertainment</option>
-                            <option>Other</option>
-                    </select>
+                    
+                    <div className="form-group">
+                        <label>Category</label>
+                        <select
+                            value={category}
+                            onChange={(e)=>setCategory(e.target.value)}
+                        >
+                                <option>All</option>
+                                <option>Tech</option>
+                                <option>Lifestyle</option>
+                                <option>Sports</option>
+                                <option>Entertainment</option>
+                                <option>Other</option>
+                        </select>
+                    </div>
+
+
+                    
+                    <br/>
+                    <button className="" onClick={createPost}>Submit Post</button>
                 </div>
-
-
-                
-                <br/>
-                <button onClick={createPost}>Submit Post</button>
-            </div>
-        </div>
+            </motion.div>
+            
+        </CreateBlog>
      );
 }
  

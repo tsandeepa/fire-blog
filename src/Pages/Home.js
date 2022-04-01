@@ -124,7 +124,7 @@ const Home = ({isAuth, setUserName}) => {
                     {
                         categoryList.map((list,i)=>{
                             return(
-                                <div key={i}  onClick={(e)=>{filterCategory(e.target.innerHTML, e)}}>
+                                <div key={i} onClick={(e)=>{filterCategory(e.target.innerHTML, e)}}>
                                     <label>{list.category}</label>
                                 </div>
                             )
@@ -149,7 +149,7 @@ const Home = ({isAuth, setUserName}) => {
                                     >
                                         <h3 className="blog-cover-title">{post.title}</h3>
                                         <img className="blog-cover-img" src={post.coverImg} alt="" /> 
-                                        <label className="blog-category">  {post.category !== 'All'? <span>{post.category}</span> : <span className="hide"></span> }   </label>
+                                        <label className="blog-category">  {post.category !== 'All'? <span className={`cat-${post.category}`}>{post.category}</span> : <span className="hide"></span> }   </label>
                                         <p className="blog-text-prv">{post.postText}</p>
                                     </motion.div>
                                     

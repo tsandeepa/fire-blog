@@ -27,7 +27,7 @@ function App() {
     })
   }
 
-  const[theme, setTheme] = useState(lightTheme);
+  const[theme, setTheme] = useState(darkTheme);
 
   const handleTheme = () =>{
     theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);

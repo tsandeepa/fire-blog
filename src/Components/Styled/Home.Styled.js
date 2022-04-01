@@ -7,7 +7,6 @@ export const HomeMain = styled.div`
     padding: 20px;
     .category-tabs{
         display: flex;
-        gap: 20px;
         justify-content: center;
         padding: 20px;
         margin-bottom: 35px;
