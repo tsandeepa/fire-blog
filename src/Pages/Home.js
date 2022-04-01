@@ -19,7 +19,7 @@ const Home = ({isAuth, setUserName}) => {
     // const postsCollectionRef = collection(db, "posts")
 
 
-    const {isLoading, categoryList, selectedCategory, setSelectedCategory,fillterdCategoryPosts, setFilteredCategoryPosts} = useFetch()
+    const {isLoading, categoryLoaded, categoryList, selectedCategory, setSelectedCategory,fillterdCategoryPosts, setFilteredCategoryPosts} = useFetch()
     setUserName(localStorage.getItem('userName'))
     // const [fillterdCategoryPosts, setFilteredCategoryPosts] = useState(null);
 
@@ -100,6 +100,17 @@ const Home = ({isAuth, setUserName}) => {
         )
       }
 
+      useEffect( async () => {
+        const catLbls = await catTabs.current?.querySelectorAll('label');
+        console.log('cat acc'+catLbls);
+        catLbls && catLbls.forEach(lbl => {
+            if(lbl.innerHTML == 'All'){
+                lbl.classList.add('active')
+                return
+            }
+        });  
+      }, [categoryLoaded]);
+
 
     return ( 
         <HomeMain>
@@ -138,7 +149,7 @@ const Home = ({isAuth, setUserName}) => {
                                     >
                                         <h3 className="blog-cover-title">{post.title}</h3>
                                         <img className="blog-cover-img" src={post.coverImg} alt="" /> 
-                                        <label className="blog-category">{post.category}</label>
+                                        <label className="blog-category">  {post.category !== 'All'? <span>{post.category}</span> : <span className="hide"></span> }   </label>
                                         <p className="blog-text-prv">{post.postText}</p>
                                     </motion.div>
                                     
@@ -150,7 +161,7 @@ const Home = ({isAuth, setUserName}) => {
                                         )
                                     } */}
                                     <div className="bg-foot">
-                                        <p className="blog-author">{post.author?.name}</p>
+                                        <p className="blog-author"><span>{post.author?.name.slice(0,1)}</span>{post.author?.name}</p>
                                         <p className="blog-timestamp">{post.timestamp}</p>
                                     </div>
                                     

@@ -8,6 +8,7 @@ const useFetch = () => {
 
     
     const [selectedCategory, setSelectedCategory] = useState('All')
+    const [categoryLoaded, setcategoryLoaded] = useState(false);
 
     const [reload, setReload] = useState(false)
     const [postList, setPostList] = useState([])
@@ -52,7 +53,7 @@ const useFetch = () => {
             console.log(fillterdCategoryPosts);
             setCategoryList(dataCategory.docs.map((doc)=> ({...doc.data()})));
 
-
+            setcategoryLoaded(true)
             setIsLoading(false)
         };
 
@@ -63,7 +64,7 @@ const useFetch = () => {
 
     
 
-    return {isLoading, reload, setReload, postList, categoryList, selectedCategory, setSelectedCategory, fillterdCategoryPosts, setFilteredCategoryPosts}
+    return {isLoading, categoryLoaded,reload, setReload, postList, categoryList, selectedCategory, setSelectedCategory, fillterdCategoryPosts, setFilteredCategoryPosts}
 
 
 

@@ -10,6 +10,7 @@ export const HomeMain = styled.div`
         gap: 20px;
         justify-content: center;
         padding: 20px;
+        margin-bottom: 35px;
         div{
             label{
                 cursor: pointer;
