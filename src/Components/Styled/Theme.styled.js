@@ -11,9 +11,10 @@ export const lightTheme = {
     c3: '#f9ecbd',
     c4: '#f0e2e2',
     c5: '#e1e5cd',
-    formFieldBg:'#f6f2e4',
+    formFieldBg:'#fafafa',
     borderColor:'#d4d2c8',
-    progressBg: '#45373717'
+    progressBg: '#45373717',
+    btSubmitBg: '#27b784'
 }
    
 export const darkTheme = {
@@ -31,6 +32,7 @@ export const darkTheme = {
     c5: '#3f3c2e',
     formFieldBg:'#2f2c36',
     borderColor:'#534f61',
-    progressBg: '#ccccff17'
+    progressBg: '#ccccff17',
+    btSubmitBg: '#3fb1f8'
 
 }

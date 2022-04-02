@@ -108,18 +108,27 @@ const GlobalStyles = createGlobalStyle`
             font-size: 14px;
             border-radius: 3px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap:5px;
         }
         
     }
-    .img-prv{
+    
+    .bt-submit{
+        cursor: pointer;
+        padding: 19px 40px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
         width: 100%;
-        margin-top: 20px;
-        img{
-            width: 100%;
-            border-radius: 5px;
-        }
+        color: #fff;
+        border-radius: 3px;
+        background: ${({theme})=> theme.btSubmitBg};
     }
-
+    .bt-submit.sb-disabled{
+        opacity: 0.7;
+    }
 `
 
 export default GlobalStyles
