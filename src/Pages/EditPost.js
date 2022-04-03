@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 
 import { auth, db, storage } from "../firebase-config";
 import { getDocs, collection, deleteDoc, updateDoc ,doc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { async } from "@firebase/util";
+import { EditBlog } from "../Components/Styled/EditPost.styled";
+import { motion } from "framer-motion";
+import { MdOutlineDoDisturbOn } from "react-icons/md";
+
 
 
 const EditPost = ({eidState, setEditState, postId, postList, reload, setReload }) => {
@@ -19,17 +23,31 @@ const EditPost = ({eidState, setEditState, postId, postList, reload, setReload }
     const [coverImg, setCoverImg] = useState(null)
     const [editLoading, setEditLoading] = useState(false)
     
+    const [upFileName, setupFileName] = useState(null);
+
+    const [submitState, setsubmitState] = useState(false);
+
 
     const [editTitle, seteditTitle] = useState();
     
 
     
-
+    const handleFileInput = (e) => {
+        // handle validations
+        // onFileSelect(e.target.files[0])
+        const upFile = e.target.files[0];
+        console.log(upFile);
+        setupFileName(upFile.name)
+        setFile(upFile)
+        
+    }
 
 
 
     
     const btnUploadFile = () =>{
+        setEditLoading(true)
+
         console.log(file);
         if(!file) return
 
@@ -46,18 +64,15 @@ const EditPost = ({eidState, setEditState, postId, postList, reload, setReload }
                 getDownloadURL(uploadtask.snapshot.ref).then(url => {
                     setCoverImg(url)
                     console.log(url)
+                    setEditLoading(false)
+
                 }) 
             }
         );
     }
 
 
-    const handleFileInput = (e) => {
-        // handle validations
-        // onFileSelect(e.target.files[0])
-        const upFile = e.target.files[0];
-        setFile(upFile)
-    }
+    
 
 
     const updatePost = async (idPost) =>{
@@ -69,8 +84,8 @@ const EditPost = ({eidState, setEditState, postId, postList, reload, setReload }
             title: `${title}`,
             coverImg: `${coverImg}`,
             postText:`${postText}`,
-            category:`${category}`
-
+            category:`${category}`,
+            upFileName:`${upFileName}`
         });
         setEditLoading(false)
         setEditState(false)
@@ -87,65 +102,137 @@ const EditPost = ({eidState, setEditState, postId, postList, reload, setReload }
         setTitle(editBlog[0].title)
         setPostText(editBlog[0].postText)
         setCategory(editBlog[0].category)
-        setCoverImg(editBlog[0].coverImg)
+        setCoverImg(editBlog[0]?.coverImg)
+        setupFileName(editBlog[0]?.upFileName)
 
     },[])
 
 
+    const removeImage = async (idPost) =>{
+        setEditLoading(true)
+
+        const fileRef = ref(storage, `/files/${upFileName}`);
+        // Delete the file
+
+        const postDoc =  doc(db, "posts", idPost)
+
+        setsubmitState(true)
+        deleteObject(fileRef).then(() => {
+            // File deleted successfully
+            console.log("file Deleted");
+            setCoverImg(null);
+            setProgress(0)
+            setupFileName('')
+            setsubmitState(false)
+
+            updateDoc(postDoc, {
+                
+                upFileName:`${null}`
+                
+            }).then(()=>{
+                console.log('File name updated');
+                setEditLoading(false)
+
+            });
+
+        }).catch((error) => {
+            // Uh-oh, an error occurred!
+            console.log("File error");
+
+        });
+
+    }
+
+  
 
 
     return ( 
-        <div>
+        <EditBlog>
 
-           
-            <h3>Edit post - {postId}</h3>
-            <div className="eidt-post">
-                <div>
-                    <div className="form-group">
-                        <img src={coverImg} style={{'width':'200px'}} alt="" />
-                        <label>File</label><br/>
-                        <input  type="file" onChange={handleFileInput}/>
-                        <button onClick={()=>btnUploadFile()}>Upload</button> <br></br>
-                        <h3>Progress {progress}%</h3>
+            <motion.div layout>
+                <div className="sub-page-header">
+                    <div>
+                        <h3>Edit Blog</h3>
+                        <label htmlFor="">Edit your blog details here</label>
                     </div>
-                    <div className="post-box">
-                        <div className="form-group">
-                            <label>Title : {title}</label><br/>
-                            <input type="text" placeholder="Title..."  value={title} onChange={(e)=>{setTitle(e.target.value)}} />
-                        </div>
-                        <br/>
-                        <div className="form-group">
-                            <label>Post :{postText} </label><br/>
-                            <textarea placeholder="Post" value={postText}  onChange={(e)=>{setPostText(e.target.value)}}></textarea>
-                        </div>
+                    <button className="bt-sm-light" onClick={()=>{setEditState(false)}}>Cancel Edit</button>
 
-                        <div className="form-group">
-                            <label>Category :{category} </label><br/>
-                            <select
-                                value={category}
-                                onChange={(e)=>setCategory(e.target.value)}
-                            >
-                                    {/* <option>Uncategorized</option> */}
-                                    <option>Tech</option>
-                                    <option>Lifestyle</option>
-                                    <option>Sports</option>
-                                    <option>Entertainment</option>
-                                    <option>Other</option>
-                            </select>
-                        </div>
-
-                        <br/>
-                    </div>
+                        
                 </div>
-                <button onClick={()=>{setEditState(false)}}>Cancel Edit</button>
+                <div className="eidt-post">
+                    <div>
+                        <div className="form-group">
 
-                {
-                    editLoading ?  <button>Updating...</button> : 
-                                    <button onClick={()=>{updatePost(postId)}}>Update</button>
-                }
-                
-            </div>
-        </div>
+                            <label>Cover Image</label>
+                            <div className="upload-input">
+                                <div>
+                                    <div  className="prg-bar" style={{'width': `${progress}%`}}> <span>{progress !== 0 ? `${progress}%`: ''}</span></div>
+                                    
+                                    <span>   {coverImg ? 'Remove file to update the image' 
+                                    : <span>
+                                        { upFileName ? upFileName 
+                                        :'Drag or selet a file to upload'
+                                        }
+                                    </span>  
+                                    }</span>
+                                    <input  type="file" onChange={handleFileInput}/>
+
+                                </div>
+                                {
+                                    progress == 100 || coverImg ? 
+                                        <span style={{'display':'flex'}}>{!submitState? <button onClick={()=> removeImage(postId)}> <MdOutlineDoDisturbOn /> Remove</button> : <button disabled>Removing..</button>}</span> 
+                                    : <span style={{'display':'flex'}}>{upFileName? <button onClick={()=>btnUploadFile()}>Upload image</button>:''}</span> 
+                                }
+                            </div>
+
+                            <div className="img-prv">
+                                { progress == 100 || coverImg ? <img src={coverImg} alt="" /> :''}
+                            
+                            </div>
+                            {/* <label>File</label><br/> */}
+                            {/* <button onClick={()=>btnUploadFile()}>Upload</button> <br></br> */}
+                            {/* <h3>Progress {progress}%</h3> */}
+                        </div>
+                        <div className="post-box">
+                            <div className="form-group">
+                                <label>Title </label><br/>
+                                <input type="text" placeholder="Title..."  value={title} onChange={(e)=>{setTitle(e.target.value)}} />
+                            </div>
+                            <br/>
+                            <div className="form-group">
+                                <label>Post </label><br/>
+                                <textarea placeholder="Post" value={postText}  onChange={(e)=>{setPostText(e.target.value)}}></textarea>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Category  </label><br/>
+                                <select
+                                    value={category}
+                                    onChange={(e)=>setCategory(e.target.value)}
+                                >
+                                        {/* <option>Uncategorized</option> */}
+                                        <option>Tech</option>
+                                        <option>Lifestyle</option>
+                                        <option>Sports</option>
+                                        <option>Entertainment</option>
+                                        <option>Other</option>
+                                </select>
+                            </div>
+
+                            <br/>
+                        </div>
+                    </div>
+
+                    {
+                        editLoading ?  <button className="bt-submit">Updating...</button> : 
+                                        <button className="bt-submit" onClick={()=>{updatePost(postId)}}>Update</button>
+                    }
+                    
+                </div>
+            </motion.div>
+            
+        </EditBlog>
+        
      );
 }
  

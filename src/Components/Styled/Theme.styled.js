@@ -6,6 +6,7 @@ export const lightTheme = {
     categoryActive: '#ededed',
     textLightColor: '#9d9c9c',
     catTextColor: '#000',
+    formBorder:'#eaeaea',
     c1: '#daf3ee',
     c2: '#e1e8ff',
     c3: '#f9ecbd',
@@ -14,7 +15,14 @@ export const lightTheme = {
     formFieldBg:'#fafafa',
     borderColor:'#d4d2c8',
     progressBg: '#45373717',
-    btSubmitBg: '#27b784'
+    btSubmitBg: '#27b784',
+    btSmBorder: '#bad2f2',
+    btSmColor: '#6d92c4',
+    btSmBg: '#eef4ff',
+    btOptBg: '#0000001c',
+    loggedUserBorder:'#eaeaea',
+    navBg:'#9a9a9a0f'
+
 }
    
 export const darkTheme = {
@@ -25,6 +33,7 @@ export const darkTheme = {
     categoryActive: '#393d60;',
     textLightColor: '#79787b',
     catTextColor: '#fff',
+    formBorder:'#2f2c36',
     c1: '#4d727c',
     c2: '#343c58',
     c3: '#403d24',
@@ -33,6 +42,13 @@ export const darkTheme = {
     formFieldBg:'#2f2c36',
     borderColor:'#534f61',
     progressBg: '#ccccff17',
-    btSubmitBg: '#3fb1f8'
+    btSubmitBg: '#3fb1f8',
+    btSmBorder: '#3b4c62',
+    btSmColor: '#89a5c9',
+    btSmBg: '#333040',
+    btOptBg: '#ffffff1c',
+    loggedUserBorder:'#515152',
+    navBg:'#ffffff0f'
+
 
 }

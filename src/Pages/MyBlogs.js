@@ -6,6 +6,10 @@ import { getDocs, collection, deleteDoc, updateDoc ,doc } from "firebase/firesto
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { async } from "@firebase/util";
 import EditPost from "./EditPost";
+import { MyBlogsCustom } from "../Components/Styled/MyBlogs.styled";
+import { motion } from "framer-motion";
+import { BiTrashAlt, BiEditAlt } from "react-icons/bi";
+
 
 
 
@@ -51,7 +55,20 @@ const MyBlogs = ({isAuth}) => {
         setPostId(id)
     }
     
-
+    const variants = {
+        hidden: { opacity: 0, scale:0.8, y:-10},
+        visible: i =>(
+            { 
+                opacity: 1,
+                scale:1,
+                y:0,
+                transition:{
+                    type: "easeIn",
+                    delay: i * 0.04,
+                } 
+            }
+        )
+      }
 
 
 
@@ -61,61 +78,82 @@ const MyBlogs = ({isAuth}) => {
 
 
     return ( 
-        <div>
-            <h5>My Blogs</h5>
-
-            {isLoading && <div>Loading...</div>}
-
-                {   
-                     !eidState && postList.map((post,i)=>{
-                        return(
-                            <div key={i}>
-
-
-                                    {
-
-                                        isAuth && post.author.id == auth.currentUser.uid && (
-
-                                           <>
-                                             <h3>{post.title}</h3>
-                                            <img style={{width:'100px'}} src={post.coverImg} alt="" /> <br></br>
-    
-                                            <label>{post.author.name}</label>
-                                            <br/>
-                                            <p>{post.postText}</p>
-
-                                                <button onClick={()=>{deletePost(post.id)}}>Delete</button>
-                                                <button onClick={()=>{editPost(post.id)}}>Edit</button>
-                                                <br/>
-                                                <br/>
-
-
-
-                                                
-                                           </>
-    
-                                        )
-                                    }
-                                    
-                                
+        <MyBlogsCustom>
+            <div>
+                    {   !eidState &&
+                        <div className="sub-page-header">
+                            <div>
+                                <h3>My Blogs</h3>
+                                <label>All your blogs are listed here</label>
                             </div>
-                        )
-                    })
-                }
+                        </div>
+                    }
 
-                {
-                eidState &&
-                <EditPost  eidState={eidState} 
-                            setEditState={setEditState} 
-                            postId={postId} 
-                            postList={postList}
-                            setReload={setReload}
-                            reload={reload}
-                            />
-                }
+                    {isLoading && <div>Loading...</div>}
 
-               
-        </div>
+                    {   
+                        !eidState && postList.map((post,i)=>{
+                            return(
+                                <div key={i} className="my-blogs">
+
+
+                                        {
+
+                                            isAuth && post.author.id == auth.currentUser.uid && (
+
+                                            <motion.div 
+                                                custom={i}
+                                                initial="hidden"
+                                                animate="visible"
+                                                variants={variants}
+                                            >
+                                                <div className="my-blog-li">
+                                                    <div className="mb-img">
+                                                        <img src={post.coverImg} alt="" /> <br></br>
+                                                    </div>
+                                                    <div style={{'flex':'1'}}>
+                                                        <h3>{post.title}</h3>
+                                                        {/* <label>{post.author.name}</label> */}
+                                                        <p className="mb-p1">{post.postText}</p>
+                                                        <p className="mb-p2">{post.timestamp}</p>
+                                                        <div className="mb-li-opt">
+                                                            <motion.button 
+                                                                whileHover={{ scale: 1.1}}
+                                                            title="Delete" onClick={()=>{deletePost(post.id)}}> <BiTrashAlt/></motion.button>
+                                                            <motion.button 
+                                                                whileHover={{ scale: 1.1}}
+                                                            title="Edit" onClick={()=>{editPost(post.id)}}><BiEditAlt/></motion.button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                            </motion.div>
+        
+                                            )
+                                        }
+                                        
+                                    
+                                </div>
+                            )
+                        })
+                    }
+
+                    {
+                    eidState &&
+                    <EditPost  eidState={eidState} 
+                                setEditState={setEditState} 
+                                postId={postId} 
+                                postList={postList}
+                                setReload={setReload}
+                                reload={reload}
+                                />
+                    }
+
+                
+            </div>
+        </MyBlogsCustom>
+        
      );
 }
  

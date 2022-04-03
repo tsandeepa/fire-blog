@@ -111,6 +111,7 @@ const Home = ({isAuth, setUserName}) => {
         });  
       }, [categoryLoaded]);
 
+      let loadBlocks = ['','','','','','',]
 
     return ( 
         <HomeMain>
@@ -118,7 +119,6 @@ const Home = ({isAuth, setUserName}) => {
             
             <div>
                 <br/>
-                {isLoading && <div style={{"position": "absolute"}}>Loading...</div>}
 
                 <div className="category-tabs" ref={catTabs}>
                     {
@@ -131,6 +131,35 @@ const Home = ({isAuth, setUserName}) => {
                         })
                     }
                 </div>
+                {/* {isLoading && <div style={{"position": "absolute"}}>Loading...</div>} */}
+                <div className="loading-blogs">
+                    
+                    {   isLoading &&
+                        loadBlocks.map(()=>(
+                            <div className="lb-block">
+                                <div className="lb_title">
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div className="lb_image"></div>
+                                <div className="lb_category"></div>
+                                <div className="lb_postText">
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div className="lb_user_date">
+                                    <div className="lb_user">
+                                        <div className="lbu_img"></div>
+                                        <div className="lb_name"></div>
+                                    </div>
+                                    <div className="lb_date"></div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                
+                </div>
+
 
                 <Bloglist>
 
@@ -141,7 +170,7 @@ const Home = ({isAuth, setUserName}) => {
 
                             <Blog key={i}>
                                 <Link to={`/blog/${post.id}`}>
-                                    <motion.div layout
+                                    <motion.div 
                                         custom={i}
                                         initial="hidden"
                                         animate="visible"

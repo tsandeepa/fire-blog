@@ -19,6 +19,9 @@ const GlobalStyles = createGlobalStyle`
 
     .sub-page-header{
         margin-bottom: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         h3{
             font-size: 34px;
             margin-bottom: 3px;
@@ -38,14 +41,14 @@ const GlobalStyles = createGlobalStyle`
         input{
             width: 100%;
             padding: 12px;
-            border: none;
+            border: 1px solid ${({theme})=> theme.formBorder};
             background: ${({theme})=> theme.formFieldBg};
             color: ${({theme})=> theme.textColor};
         }
         textarea{
             width: 100%;
             height: 150px;
-            border: none;
+            border: 1px solid ${({theme})=> theme.formBorder};
             background: ${({theme})=> theme.formFieldBg};
             color: ${({theme})=> theme.textColor};
             padding: 12px;
@@ -55,8 +58,38 @@ const GlobalStyles = createGlobalStyle`
             padding: 12px;
             background: ${({theme})=> theme.formFieldBg};
             color: ${({theme})=> theme.textColor};
-            border: none;
+            border: 1px solid ${({theme})=> theme.formBorder};
+            
+
         }
+
+        .img-prv{
+        width: 100%;
+        margin-top: 20px;
+        position: relative;
+        img{
+            width: 100%;
+            border-radius: 5px;
+        }
+        .img-loading{
+            background: #8d8d8d17;
+            text-align: center;
+            padding: 20px;
+            border-radius: 3px;
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            span{
+                color: ${({theme})=> theme.textColor};
+                font-size: 14px;
+            }
+        }
+        .hide{
+            display: none;
+        }
+    }
     }
     .upload-input{
         display: flex;
@@ -102,7 +135,7 @@ const GlobalStyles = createGlobalStyle`
         }
         button{
             background: #fff;
-            border: none;
+            border: 1px solid ${({theme})=> theme.formBorder};
             padding: 0 15px;
             font-weight: 600;
             font-size: 14px;
@@ -114,6 +147,8 @@ const GlobalStyles = createGlobalStyle`
         }
         
     }
+
+    
     
     .bt-submit{
         cursor: pointer;
@@ -126,9 +161,28 @@ const GlobalStyles = createGlobalStyle`
         border-radius: 3px;
         background: ${({theme})=> theme.btSubmitBg};
     }
+
+    @mixin bt-sm-light-props {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .bt-sm-light{
+        padding: 8px 20px;
+        border: 1px solid ${({theme})=> theme.btSmBorder};
+        border-radius: 3px;
+        color: ${({theme})=> theme.btSmColor};
+        background: ${({theme})=> theme.btSmBg};
+        font-weight: 500;
+        cursor: pointer;
+
+    }
+
     .bt-submit.sb-disabled{
         opacity: 0.7;
     }
+
+    
 `
 
 export default GlobalStyles

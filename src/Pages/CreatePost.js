@@ -30,7 +30,7 @@ const CraetePost = ({isAuth}) => {
 
     const createPost = async () =>{
         setsubmitState(true)
-        await addDoc(postsCollectionRef,{timestamp, timestampOrder, title, postText, coverImg, category,author: {name: auth.currentUser.displayName, id: auth.currentUser.uid }});
+        await addDoc(postsCollectionRef,{timestamp, timestampOrder, title, postText, coverImg, category,upFileName,author: {name: auth.currentUser.displayName, id: auth.currentUser.uid }});
         setsubmitState(false)
         navigate('/')
     }
@@ -104,8 +104,11 @@ const CraetePost = ({isAuth}) => {
         <CreateBlog>
             <motion.div layout>
                 <div className="sub-page-header">
-                    <h3>Create Blog</h3>
-                    <label htmlFor="">Add your blog details here</label>
+                    <div>
+                        <h3>Create Blog</h3>
+                        <label>Add your blog details here</label>
+                    </div>
+                    
                 </div>
                 <div className="form-group ">
                         <label>Cover Image</label>
