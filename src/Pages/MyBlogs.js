@@ -75,7 +75,7 @@ const MyBlogs = ({isAuth}) => {
 
 
   
-
+      const mybShadowLoading = ['','','','','','']
 
     return ( 
         <MyBlogsCustom>
@@ -89,7 +89,23 @@ const MyBlogs = ({isAuth}) => {
                         </div>
                     }
 
-                    {isLoading && <div>Loading...</div>}
+
+
+                    {   isLoading &&
+                        mybShadowLoading.map(()=>(
+                            <div className="myb-loading">
+                                <div className="myb-img"></div>
+                                <div className="myb-content">
+                                    <div>
+                                        <div className="myb-title"></div>
+                                        <div className="myb-paragraph"></div>
+                                    </div>
+                                    <span className="myb-time"></span>
+                                </div>
+                            </div>
+                        ))
+                    }
+                    
 
                     {   
                         !eidState && postList.map((post,i)=>{
@@ -111,10 +127,12 @@ const MyBlogs = ({isAuth}) => {
                                                     <div className="mb-img">
                                                         <img src={post.coverImg} alt="" /> <br></br>
                                                     </div>
-                                                    <div style={{'flex':'1'}}>
-                                                        <h3>{post.title}</h3>
-                                                        {/* <label>{post.author.name}</label> */}
-                                                        <p className="mb-p1">{post.postText}</p>
+                                                    <div className="mb-content">
+                                                        <div>
+                                                            <h3>{post.title}</h3>
+                                                            {/* <label>{post.author.name}</label> */}
+                                                            <p className="mb-p1">{post.postText}</p>
+                                                        </div>
                                                         <p className="mb-p2">{post.timestamp}</p>
                                                         <div className="mb-li-opt">
                                                             <motion.button 

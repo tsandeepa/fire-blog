@@ -27,7 +27,7 @@ export const HomeMain = styled.div`
         grid-template-columns: repeat(3,1fr);
         .lb-block{
             margin-bottom: 50px;
-            animation: shadow-loading 1.1s infinite alternate;
+            animation: shadow-loading 0.5s infinite alternate;
             .lb_title{
                 div{border-radius:3px; height: 15px; background: #aeacac; margin-bottom:10px}
                 div{
