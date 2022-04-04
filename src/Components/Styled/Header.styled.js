@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 export const Navbar = styled.nav`
+    position: relative;
+    z-index: 1;
     background:${({theme})=> theme.bg};
     display: flex;
     justify-content: space-between;
@@ -13,6 +15,9 @@ export const Navbar = styled.nav`
         gap: 8px;
         h1{
             font-size: 18px;
+            background: -webkit-linear-gradient(45deg,#ff7272,#7b33c5 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
         }
     }
     .nav-opt{

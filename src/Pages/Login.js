@@ -2,6 +2,12 @@ import { auth, prover } from "../firebase-config";
 import { signInWithPopup } from 'firebase/auth';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { BlogLogin } from "../Components/Styled/Login.styled";
+import { BiChat } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
+import { motion } from "framer-motion";
+
+
 
 const Login = ({setIsAuth}) => {
 
@@ -21,14 +27,20 @@ const Login = ({setIsAuth}) => {
     }
 
     return ( 
-        <div style={{width:'500px', margin:'0 auto', background:'#ccf', padding:'30px'}}>
-            <h2>This is login</h2>
-
-            <p>Pleas sign in with google</p>
-            <button onClick={signInWithGoogle} >Sign In</button>
-
+        <BlogLogin>
+            <motion.div className="log-box"
+                initial={{scale:0.3, y:50}}
+                animate={{scale:1, y:0}}
+            >
+                <div className="site-pref">
+                    <BiChat className="site-logo"/>
+                </div>
+                <h2>REACT BLOGS</h2>
+                <p className="slogan">Sign in with your google account to start writing  <br/> your awsome content</p>
+                <motion.button className="google-login" onClick={signInWithGoogle}> <FcGoogle className="fc-google"/> Sign In  </motion.button>
+            </motion.div>
             {/* <p>User is : <span>{userName}</span></p> */}
-        </div>
+        </BlogLogin>
      );
 }
  
