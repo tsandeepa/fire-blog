@@ -92,8 +92,8 @@ const MyBlogs = ({isAuth}) => {
 
 
                     {   isLoading &&
-                        mybShadowLoading.map(()=>(
-                            <div className="myb-loading">
+                        mybShadowLoading.map((element,i)=>(
+                            <div className="myb-loading" key={i}>
                                 <div className="myb-img"></div>
                                 <div className="myb-content">
                                     <div>
@@ -115,7 +115,7 @@ const MyBlogs = ({isAuth}) => {
 
                                         {
 
-                                            isAuth && post.author.id == auth.currentUser.uid && (
+                                            isAuth && post.author?.id == auth.currentUser.uid && (
 
                                             <motion.div 
                                                 custom={i}

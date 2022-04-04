@@ -142,8 +142,8 @@ const Home = ({isAuth, setUserName}) => {
                 <div className="loading-blogs">
                     
                     {   isLoading &&
-                        loadBlocks.map(()=>(
-                            <div className="lb-block">
+                        loadBlocks.map((element,i)=>(
+                            <div className="lb-block" key={i}>
                                 <div className="lb_title">
                                     <div></div>
                                     <div></div>
