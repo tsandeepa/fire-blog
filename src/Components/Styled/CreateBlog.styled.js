@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const CreateBlog = styled.div`
     max-width: 600px;
     margin: 0 auto;
-    padding: 25px 0;
+    padding: 25px 12px 65px;
     .img-prv{
         width: 100%;
         margin-top: 20px;

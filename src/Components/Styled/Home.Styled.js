@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const HomeMain = styled.div`
     background:${({theme})=> theme.bg};
     max-width: 1100px;
+    padding: 0 12px;
     margin: 0 auto;
     .category-tabs{
         display: flex;
@@ -21,10 +22,20 @@ export const HomeMain = styled.div`
             }
         }
     }
+    .cat-contain{
+        overflow: hidden;
+    }
+    @media only screen and (max-width: 600px) {
+        .cat-contain {
+            display:flex;
+        }
+    }
+
     .loading-blogs{
         display: grid;
         gap: 20px;
-        grid-template-columns: repeat(3,1fr);
+        /* grid-template-columns: repeat(3,1fr); */
+        grid-template-columns: repeat(auto-fill, minmax(340px,1fr));
         .lb-block{
             margin-bottom: 50px;
             animation: shadow-loading 0.5s infinite alternate;

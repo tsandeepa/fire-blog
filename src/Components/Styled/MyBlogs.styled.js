@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const MyBlogsCustom = styled.div`
     max-width: 600px;
     margin: 0 auto;
-    padding: 25px 0;
+    padding: 25px 12px;
     .my-blogs{
 
         .my-blog-li{
@@ -132,6 +132,22 @@ export const MyBlogsCustom = styled.div`
     @keyframes shadow-loading {
         0%{opacity: 0.1;}
         100%{opacity: 0.15;}
+    }
+
+    @media only screen and (max-width: 600px) {
+        .mb-img {
+            img{
+                width: 110px !important;
+                height: 82px !important;
+            }
+        }
+        .my-blog-li{
+            gap: 14px !important;
+        }
+        .mb-p1{
+            -webkit-line-clamp: 1 !important;
+            
+        }
     }
 
 `

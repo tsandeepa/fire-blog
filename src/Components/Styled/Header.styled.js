@@ -30,6 +30,7 @@ export const Navbar = styled.nav`
             text-decoration: none;
         }
         .logged-user{
+            background: ${({theme})=> theme.formFieldBg};
             display: flex;
             align-items: center;
             gap: 10px;
@@ -39,6 +40,15 @@ export const Navbar = styled.nav`
             p{text-transform: capitalize;}
             
         }
+
+        @media only screen and (max-width: 600px) {
+            .logged-user {
+                position: fixed;
+                bottom: 12px;
+                left: 14px;
+            }
+        }
+
         button{
                 width: 34px;
                     height: 34px;

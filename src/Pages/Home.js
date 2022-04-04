@@ -119,18 +119,25 @@ const Home = ({isAuth, setUserName}) => {
             
             <div>
                 <br/>
-
-                <div className="category-tabs" ref={catTabs}>
-                    {
-                        categoryList.map((list,i)=>{
-                            return(
-                                <div key={i} onClick={(e)=>{filterCategory(e.target.innerHTML, e)}}>
-                                    <label>{list.category}</label>
-                                </div>
-                            )
-                        })
-                    }
+                <div className="cat-contain">
+                    <motion.div 
+                        drag="x" 
+                        dragConstraints={{ left: 0, right: -300 }}
+                    className="category-tabs" ref={catTabs}>
+                        {
+                            categoryList.map((list,i)=>{
+                                return(
+                                    <div key={i} onClick={(e)=>{filterCategory(e.target.innerHTML, e)}}>
+                                        <label>{list.category}</label>
+                                    </div>
+                                )
+                            })
+                        }
+                    </motion.div>
                 </div>
+                
+
+
                 {/* {isLoading && <div style={{"position": "absolute"}}>Loading...</div>} */}
                 <div className="loading-blogs">
                     
