@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const BlogView = styled.div`
     max-width: 600px;
     margin: 0 auto;
-    padding: 25px 0 ;
+    padding: 25px 12px ;
     .blog-box{
         .pc-title{
             font-size: 29px;
