@@ -37,7 +37,9 @@ const Login = ({setIsAuth}) => {
                 </div>
                 <h2>REACT BLOGS</h2>
                 <p className="slogan">Sign in with your google account to start writing  <br/> your awsome content</p>
-                <motion.button className="google-login" onClick={signInWithGoogle}> <FcGoogle className="fc-google"/> Sign In  </motion.button>
+                <motion.button 
+                    whileTap={{scale:0.9}}
+                className="google-login" onClick={signInWithGoogle}> <FcGoogle className="fc-google"/> Sign In  </motion.button>
             </motion.div>
             {/* <p>User is : <span>{userName}</span></p> */}
         </BlogLogin>
