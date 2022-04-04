@@ -122,7 +122,7 @@ const Home = ({isAuth, setUserName}) => {
                 <div className="cat-contain">
                     <motion.div 
                         drag="x" 
-                        dragConstraints={{ left: 0, right: -300 }}
+                        dragConstraints={{ left: -300, right: 0 }}
                     className="category-tabs" ref={catTabs}>
                         {
                             categoryList.map((list,i)=>{

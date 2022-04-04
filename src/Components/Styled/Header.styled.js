@@ -35,10 +35,23 @@ export const Navbar = styled.nav`
             align-items: center;
             gap: 10px;
             border: 1px solid  ${({theme})=> theme.loggedUserBorder};
-            padding: 3px 5px 4px 20px;
+            padding: 3px 3px 4px 20px;
             border-radius: 50px;
             p{text-transform: capitalize;}
             
+        }
+        .btn-lgout, .bt-theme{
+            width: 34px;
+            height: 34px;
+            border-radius: 40px;
+            font-size: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            &:hover{
+                background: ${({theme})=> theme.btOptBg} !important;
+            }
         }
 
         @media only screen and (max-width: 600px) {

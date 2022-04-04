@@ -31,22 +31,22 @@ const Header = ({isAuth, signUserOut, userName, handleTheme}) => {
                 
                 <div className="logged-user">
                   <p>{userName}</p>
-                  <motion.button title="Logout" onClick={signUserOut}
+                  <motion.div className="btn-lgout" title="Logout" onClick={signUserOut}
                     whileHover={{
                       scale: 1.09,
                     }}
-                  ><BiLogInCircle/> </motion.button>
+                  ><BiLogInCircle/> </motion.div>
                   
                 </div>
                 
               </>
             }
-            <motion.button title="Theme" className="bt-theme" onClick={()=>handleTheme()}
+            <motion.div title="Theme" className="bt-theme" onClick={()=>handleTheme()}
                       whileHover={{
                         scale: 1.09,
                       }}
                       whileTap={{ scale: 0.8 }}
-            > <BiAdjust/> </motion.button>
+            > <BiAdjust/> </motion.div>
         </div>
         
       </Navbar>

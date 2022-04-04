@@ -44,6 +44,7 @@ const GlobalStyles = createGlobalStyle`
             border: 1px solid ${({theme})=> theme.formBorder};
             background: ${({theme})=> theme.formFieldBg};
             color: ${({theme})=> theme.textColor};
+            font-size: 18px;
         }
         textarea{
             width: 100%;
@@ -52,6 +53,7 @@ const GlobalStyles = createGlobalStyle`
             background: ${({theme})=> theme.formFieldBg};
             color: ${({theme})=> theme.textColor};
             padding: 12px;
+            font-size: 18px;
         }
         select{
             width: 100%;
@@ -59,6 +61,7 @@ const GlobalStyles = createGlobalStyle`
             background: ${({theme})=> theme.formFieldBg};
             color: ${({theme})=> theme.textColor};
             border: 1px solid ${({theme})=> theme.formBorder};
+            font-size: 18px;
             
 
         }
@@ -227,6 +230,13 @@ const GlobalStyles = createGlobalStyle`
             display: none;
         }
     }
+
+    @media only screen and (max-width: 600px) {
+        .mb-hide {
+            display: none;
+        }
+    }
+
     
 `
 

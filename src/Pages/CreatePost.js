@@ -63,7 +63,7 @@ const CraetePost = ({isAuth}) => {
     const btnUploadFile = () =>{
         console.log(file);
         if(!file) return
-
+        setsubmitState(true)
         const storageRef = ref(storage, `/files/${file.name}`);
         const uploadtask = uploadBytesResumable(storageRef, file);
         uploadtask.on("state_changed", (snapshot) =>{
@@ -71,12 +71,16 @@ const CraetePost = ({isAuth}) => {
                 (snapshot.bytesTransferred / snapshot.totalBytes)*100
             );
             setProgress(prog)
+            if(prog == 100){
+                setsubmitState(false)
+            }
         }, 
             (err) => console.log(err),
             ()=>{
                 getDownloadURL(uploadtask.snapshot.ref).then(url => {
                     setCoverImg(url)
                     console.log(url)
+
                 }) 
             }
         );
@@ -114,7 +118,7 @@ const CraetePost = ({isAuth}) => {
                         <label>Cover Image</label>
                         <div className="upload-input">
                             <div>
-                                <div  className="prg-bar" style={{'width': `${progress}%`}}> <span>{progress !== 0 ? `${progress}%`: ''}</span></div>
+                                <div  className="prg-bar" style={{'width': `${progress}%`}}> <span className="mb-hide">{progress !== 0 ? `${progress}%`: ''}</span></div>
 
                                 <span>   {upFileName ? upFileName : 'Drag or selet a file to upload' }</span>
                                 <input type="file" onChange={handleFileInput}/>
@@ -122,7 +126,7 @@ const CraetePost = ({isAuth}) => {
                             {
                                 progress == 100? 
                                     <span style={{'display':'flex'}}>{!submitState? <button onClick={()=> removeImage()}> <MdOutlineDoDisturbOn /> Remove</button> : <button disabled>Removing..</button>}</span> 
-                                : <span style={{'display':'flex'}}>{upFileName? <button onClick={()=>btnUploadFile()}>Upload image</button>:''}</span> 
+                                : <span style={{'display':'flex'}}>{upFileName? <span style={{'display':'flex'}}> { submitState ? <button disabled onClick={()=>btnUploadFile()}>{`Uploading(${progress}%)`}</button> : <button onClick={()=>btnUploadFile()}>Upload image</button>}</span> :''}</span> 
                             }
                         </div>
 
