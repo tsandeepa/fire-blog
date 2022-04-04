@@ -36,7 +36,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles/>
-    <Router>
+    <Router basename="/fire-blog">
       
       <Header isAuth={isAuth} signUserOut={signUserOut} userName={userName} handleTheme={handleTheme}/>
       <Routes>

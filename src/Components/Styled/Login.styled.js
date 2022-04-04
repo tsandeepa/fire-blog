@@ -25,8 +25,8 @@ export const BlogLogin = styled.div`
         }
         h2{
             background: -webkit-linear-gradient(45deg,#ff7272,#7b33c5 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .slogan{
             text-align: center;
